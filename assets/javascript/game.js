@@ -3,36 +3,38 @@ let win = 0;
 let lose = 0;
 let guessLeft = 9;
 let guessCount = [];
-let userGuess = null;
+let userGuess;
 let ranLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
 
 // I cannot get the keyup function working!! I am not sure if it has to do with the variables. 
-
 document.onkeyup = function (event) {
+    // console.log("worked")
+
+    userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+    // console.log(guessCount.indexOf(userGuess));
+    // document.getElementById("wins").textContent = wins;
 
 
-    let userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-
-    if (guessCount.indexOf(userGuess) < 0 && alphabet.indexOf(userGuess) >= 0) {
-        guessCount[guessCount.length] = userGuess;
+    if (guessCount.indexOf(userGuess) === -1 && alphabet.indexOf(userGuess) >= 0) {
+        // guessCount[guessCount.length] = userGuess;
+        console.log("here");
+        guessCount.push(userGuess);
         guessLeft--;
-        guessCount = [];
     };
-    if (ranLetter == userGuess) {
+    if (ranLetter === userGuess) {
         win++;
         guessLeft = 9;
-        guessCount = [];
         ranLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
     };
-    if (guessLeft == 0) {
-        losses++;
+    if (guessLeft === 0) {
+        lose++;
         guessLeft = 9;
-        guessCount = [];
         ranLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
     };
-};
 
-$("#win").html(win);
-$("#lose").html(lose);
-$("#guessLeft").html(guessLeft);
-$("#guessCount").html(guessCount);
+    document.getElementById("win").textContent = win;
+    document.getElementById("lose").textContent = lose;
+    document.getElementById("guessLeft").textContent = guessLeft;
+    document.getElementById("guessCount").textContent = guessCount;
+};
+    
